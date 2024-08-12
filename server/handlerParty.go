@@ -45,3 +45,22 @@ func (s *Server) CreateParty(ginCtx *gin.Context) {
 
 	ginCtx.JSON(http.StatusOK, GeneralResponse{Message: partyInstance.Name})
 }
+
+func (s *Server) GetCreatedParties(ginCtx *gin.Context) {
+	// get user from context
+	user, exists := ginCtx.Get(Header_AuthUserKey)
+	if !exists || user == nil {
+		ginCtx.JSON(http.StatusUnauthorized, Err_AuthHeaderMissing)
+		return
+	}
+	userInstance := user.(*database.User)
+
+	parties, err := s.db.GetCreatedParties(ginCtx, userInstance.Name)
+	if err != nil {
+		log.Printf("[ERROR] server.GetCreatedParties: getting parties from db: %s", err.Error())
+		ginCtx.JSON(http.StatusBadRequest, GeneralResponse{Message: err.Error()})
+		return
+	}
+
+	ginCtx.JSON(http.StatusOK, parties)
+}

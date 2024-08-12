@@ -35,7 +35,8 @@ func (s *Server) AddRoutes() {
 
 	// party routes
 	partyGroup := securedRoutes.Group("/party")
-	partyGroup.POST("/", s.CreateParty) // create party
+	partyGroup.POST("/", s.CreateParty)             // create party
+	partyGroup.GET("/created", s.GetCreatedParties) // get created party
 
 	// each party group
 	eachPartyGroup := partyGroup.Group("/:party_id")
