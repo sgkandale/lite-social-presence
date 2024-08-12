@@ -16,6 +16,7 @@ var (
 	Err_NotPartyCreator           = GeneralResponse{Message: "you are not the creator of this party"}
 	Err_UserAlreadyInParty        = GeneralResponse{Message: "user is already in this party"}
 	Err_PartyInvitationNotFound   = GeneralResponse{Message: "party invitation not found"}
+	Err_PartyMembershipNotFound   = GeneralResponse{Message: "party membership not found"}
 )
 
 var (

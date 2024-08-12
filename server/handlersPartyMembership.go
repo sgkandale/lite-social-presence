@@ -116,3 +116,41 @@ func (s *Server) JoinParty(ginCtx *gin.Context) {
 
 	ginCtx.JSON(http.StatusOK, Resp_Success)
 }
+
+func (s *Server) LeaveParty(ginCtx *gin.Context) {
+	// get user from context
+	user, exists := ginCtx.Get(Header_AuthUserKey)
+	if !exists || user == nil {
+		ginCtx.JSON(http.StatusUnauthorized, Err_AuthHeaderMissing)
+		return
+	}
+	userInstance := user.(*database.User)
+
+	// get party name from path
+	partyName := ginCtx.Param("party_id")
+	if partyName == "" {
+		ginCtx.JSON(http.StatusBadRequest, Err_ReadingRequest)
+		return
+	}
+
+	// get party membership
+	partyMembership, err := s.db.GetPartyMembership(ginCtx, partyName, userInstance.Name)
+	if err != nil {
+		if err == database.Err_NotFound {
+			ginCtx.JSON(http.StatusNotFound, Err_PartyMembershipNotFound)
+			return
+		}
+		log.Printf("[ERROR] server.LeaveParty: getting party membership from db: %s", err.Error())
+		ginCtx.JSON(http.StatusInternalServerError, Err_SomethingWrong)
+		return
+	}
+
+	err = s.db.DeletePartyMembership(ginCtx, partyMembership)
+	if err != nil {
+		log.Printf("[ERROR] server.LeaveParty: deleting party membership from db: %s", err.Error())
+		ginCtx.JSON(http.StatusInternalServerError, Err_SomethingWrong)
+		return
+	}
+
+	ginCtx.JSON(http.StatusOK, Resp_Success)
+}
