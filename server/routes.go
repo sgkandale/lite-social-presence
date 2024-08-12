@@ -24,8 +24,8 @@ func (s *Server) AddRoutes() {
 
 	// friends routes
 	friendsGroup := securedRoutes.Group("/friends")
-	friendsGroup.GET("/")            // get all friends
-	friendsGroup.DELETE("/:user_id") // remove friend
+	friendsGroup.GET("/", s.GetFriends)              // get all friends
+	friendsGroup.DELETE("/:user_id", s.RemoveFriend) // remove friend
 
 	// friend requests group
 	friendRequestsGroup := friendsGroup.Group("/requests")
