@@ -4,3 +4,15 @@ CREATE TABLE users (
     name VARCHAR(255) PRIMARY KEY,
     created_at TIMESTAMP NOT NULL
 );
+
+CREATE TABLE friendships (
+    id SERIAL PRIMARY KEY,
+    user1 VARCHAR(255) NOT NULL,
+    user2 VARCHAR(255) NOT NULL,
+    status VARCHAR(50) CHECK (status IN ('sent', 'confirmed')) NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(user1, user2),
+    FOREIGN KEY (user1) REFERENCES users(name) ON DELETE CASCADE,
+    FOREIGN KEY (user2) REFERENCES users(name) ON DELETE CASCADE
+);
