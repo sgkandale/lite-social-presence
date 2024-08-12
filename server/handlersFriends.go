@@ -90,6 +90,12 @@ func (s *Server) SendFriendRequest(ginCtx *gin.Context) {
 		return
 	}
 
+	// cannot send request to self
+	if friendName == userInstance.Name {
+		ginCtx.JSON(http.StatusBadRequest, Err_CannotSendRequestToSelf)
+		return
+	}
+
 	// check if friendship already exists
 	_, err := s.db.GetFriendship(ginCtx, userInstance.Name, friendName)
 	if err == nil {

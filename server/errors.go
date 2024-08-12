@@ -5,6 +5,7 @@ var (
 	Err_UserAlreadyRegistered     = GeneralResponse{Message: "user already registered"}
 	Err_UserNotFound              = GeneralResponse{Message: "user not found"}
 	Err_UserIdMissing             = GeneralResponse{Message: "user_id is missing"}
+	Err_CannotSendRequestToSelf   = GeneralResponse{Message: "cannot send request to self"}
 	Err_FriendshipNotFound        = GeneralResponse{Message: "friendship not found"}
 	Err_FriendshipAlreadyExists   = GeneralResponse{Message: "friendship already exists"}
 	Err_RequestIdMissing          = GeneralResponse{Message: "request_id is missing"}
