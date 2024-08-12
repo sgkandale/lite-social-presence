@@ -154,3 +154,67 @@ func (s *Server) LeaveParty(ginCtx *gin.Context) {
 
 	ginCtx.JSON(http.StatusOK, Resp_Success)
 }
+
+func (s *Server) RemoveUserFromParty(ginCtx *gin.Context) {
+	// get user from context
+	user, exists := ginCtx.Get(Header_AuthUserKey)
+	if !exists || user == nil {
+		ginCtx.JSON(http.StatusUnauthorized, Err_AuthHeaderMissing)
+		return
+	}
+	userInstance := user.(*database.User)
+
+	// get party name from path
+	partyName := ginCtx.Param("party_id")
+	if partyName == "" {
+		ginCtx.JSON(http.StatusBadRequest, Err_ReadingRequest)
+		return
+	}
+
+	// get user name from path
+	userName := ginCtx.Param("user_id")
+	if userName == "" {
+		ginCtx.JSON(http.StatusBadRequest, Err_ReadingRequest)
+		return
+	}
+
+	// get party
+	party, err := s.db.GetParty(ginCtx, partyName)
+	// check if party exists
+	if err != nil {
+		if err == database.Err_NotFound {
+			ginCtx.JSON(http.StatusNotFound, Err_PartyNotFound)
+			return
+		}
+		log.Printf("[ERROR] server.RemoveUserFromParty: getting party from db: %s", err.Error())
+		ginCtx.JSON(http.StatusInternalServerError, Err_SomethingWrong)
+		return
+	}
+
+	// only creator should be able to remove
+	if party.Creator != userInstance.Name {
+		ginCtx.JSON(http.StatusUnauthorized, Err_NotPartyCreator)
+		return
+	}
+
+	// get party membership
+	partyMembership, err := s.db.GetPartyMembership(ginCtx, partyName, userName)
+	if err != nil {
+		if err == database.Err_NotFound {
+			ginCtx.JSON(http.StatusNotFound, Err_PartyMembershipNotFound)
+			return
+		}
+		log.Printf("[ERROR] server.RemoveUserFromParty: getting party membership from db: %s", err.Error())
+		ginCtx.JSON(http.StatusInternalServerError, Err_SomethingWrong)
+		return
+	}
+
+	err = s.db.DeletePartyMembership(ginCtx, partyMembership)
+	if err != nil {
+		log.Printf("[ERROR] server.RemoveUserFromParty: deleting party membership from db: %s", err.Error())
+		ginCtx.JSON(http.StatusInternalServerError, Err_SomethingWrong)
+		return
+	}
+
+	ginCtx.JSON(http.StatusOK, Resp_Success)
+}
