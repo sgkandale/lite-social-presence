@@ -1,0 +1,6 @@
+CREATE DATABASE socialite;
+
+CREATE TABLE users (
+    name VARCHAR(255) PRIMARY KEY,
+    created_at TIMESTAMP NOT NULL
+);
