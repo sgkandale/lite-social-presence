@@ -18,6 +18,7 @@ type Client struct {
 }
 
 func New(ctx context.Context, cfg *config.DatabaseConfig) database.Database {
+	log.Println("[INFO] creating postgres connection")
 	if cfg == nil {
 		log.Fatal("[ERROR] postgres.New: config is nil")
 	}
@@ -37,10 +38,13 @@ func New(ctx context.Context, cfg *config.DatabaseConfig) database.Database {
 	pingCtx, cancelPingCtx := context.WithTimeout(ctx, timeout)
 	defer cancelPingCtx()
 
+	log.Print("[INFO] postgres connection created, pinging")
+
 	err = pgPool.Ping(pingCtx)
 	if err != nil {
 		log.Fatal("[ERROR] postgres.New: pinging db:", err)
 	}
+	log.Println("[INFO] postgres connection pinged")
 
 	return &Client{
 		Pool:    pgPool,
