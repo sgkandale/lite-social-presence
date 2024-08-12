@@ -1,0 +1,6 @@
+server:
+  port: 8080
+  tls: false
+  cert_path: ""
+  key_path: ""
+  service_name: "socialite"
