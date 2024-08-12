@@ -7,6 +7,7 @@ import (
 
 	"socialite/config"
 	"socialite/database"
+	"socialite/database/postgres"
 
 	"github.com/gin-gonic/gin"
 )
@@ -25,7 +26,18 @@ type Server struct {
 }
 
 func New(ctx context.Context, cfg *config.Config) *Server {
+	if cfg == nil {
+		log.Fatal("[ERROR] server.New: config is nil")
+	}
+
 	ginEngine := gin.Default()
+
+	var dbCnn database.Database
+	if cfg.Database.Type == "postgres" {
+		dbCnn = postgres.New(ctx, &cfg.Database)
+	} else {
+		log.Fatal("[ERROR] database type is not supported: ", cfg.Database.Type)
+	}
 
 	return &Server{
 		engine:      ginEngine,
@@ -34,6 +46,7 @@ func New(ctx context.Context, cfg *config.Config) *Server {
 		tls:         cfg.Server.TLS,
 		tlsCertPath: cfg.Server.CertPath,
 		tlsKeyPath:  cfg.Server.KeyPath,
+		db:          dbCnn,
 	}
 }
 
