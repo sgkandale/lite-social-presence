@@ -39,6 +39,7 @@ func (c *Client) GetUserFriends(ctx context.Context, name string) ([]*database.U
 		}
 		return nil, fmt.Errorf("querying postgres: %s", err.Error())
 	}
+	defer rows.Close()
 
 	respUsers := make([]*database.User, 0)
 
