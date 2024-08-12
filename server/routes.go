@@ -1,6 +1,12 @@
 package server
 
-import "github.com/gin-gonic/gin"
+import (
+	"net/http"
+
+	"socialite/database"
+
+	"github.com/gin-gonic/gin"
+)
 
 func (s *Server) AddRoutes() {
 	// health routes
@@ -12,8 +18,12 @@ func (s *Server) AddRoutes() {
 	authGroup.POST("/login", s.Login)
 	authGroup.POST("/register", s.Register)
 
+	// all routes below are secured with a middleware
+	securedRoutes := s.engine.Group("/")
+	securedRoutes.Use(AuthMiddleware())
+
 	// friends routes
-	friendsGroup := s.engine.Group("/friends")
+	friendsGroup := securedRoutes.Group("/friends")
 	friendsGroup.GET("/")            // get all friends
 	friendsGroup.DELETE("/:user_id") // remove friend
 
@@ -23,7 +33,7 @@ func (s *Server) AddRoutes() {
 	friendRequestsGroup.POST("/:request_id", nil)   // act on friend request
 
 	// party routes
-	partyGroup := s.engine.Group("/party")
+	partyGroup := securedRoutes.Group("/party")
 
 	// each party group
 	eachPartyGroup := partyGroup.Group("/:party_id")
@@ -52,8 +62,31 @@ func CORSMiddleware() gin.HandlerFunc {
 
 		if c.Request.Method == "OPTIONS" {
 			c.AbortWithStatus(200)
+			return
 		} else {
 			c.Next()
 		}
+	}
+}
+
+func AuthMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		// check for auth token in header
+		authToken := c.GetHeader("Authorization")
+		if authToken == "" {
+			c.JSON(http.StatusUnauthorized, GeneralResponse{Message: "'Authorization' header is missing"})
+			c.Abort()
+			return
+		}
+
+		// create user instance from auth token and add to context
+		userInstance, err := database.NewUser(authToken)
+		if err != nil {
+			c.JSON(http.StatusUnauthorized, GeneralResponse{Message: err.Error()})
+			c.Abort()
+			return
+		}
+		c.Set("user", userInstance)
+		c.Next()
 	}
 }
