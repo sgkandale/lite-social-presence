@@ -18,6 +18,7 @@ func main() {
 
 	// create new server instance and start
 	serverInstance := server.New(globalCtx, cfg)
+	serverInstance.AddMiddlewares()
 	serverInstance.AddRoutes()
 	go func() {
 		err := serverInstance.Start()
