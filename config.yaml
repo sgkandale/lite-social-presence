@@ -4,3 +4,7 @@ server:
   cert_path: ""
   key_path: ""
   service_name: "socialite"
+database:
+  type: 'postgres'
+  uri_string: ''
+  timeout: 60
