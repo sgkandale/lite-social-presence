@@ -14,4 +14,14 @@ type Database interface {
 	GetFriendshipById(ctx context.Context, friendshipId int32) (*Friendship, error)
 	UpdateFriendship(ctx context.Context, friendship *Friendship) error
 	DeleteFriendship(ctx context.Context, friendshipId int32) error
+
+	// party methods
+	PutParty(ctx context.Context, party *Party) error
+	GetParty(ctx context.Context, partyName string) (*Party, error)
+	GetCreatedParties(ctx context.Context, userName string) ([]*Party, error)
+
+	// party membership methods
+	PutPartyMembership(ctx context.Context, membership *PartyMembership) error
+	UpdatePartyMembership(ctx context.Context, membership *PartyMembership) error
+	DeletePartyMembership(ctx context.Context, membership *PartyMembership) error
 }

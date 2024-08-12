@@ -152,3 +152,90 @@ func TestGetFriendshipById(t *testing.T) {
 	}
 	log.Printf("friendship : %+v", friendship)
 }
+
+var testParty = &database.Party{
+	Name:      "party1",
+	Creator:   "user1",
+	CreatedAt: time.Now(),
+	UpdatedAt: time.Now(),
+}
+
+func TestPutPartyOne(t *testing.T) {
+	err := dbConn.PutParty(
+		context.Background(),
+		testParty,
+	)
+	if err != nil {
+		t.Error(err)
+	}
+}
+
+func TestGetParty(t *testing.T) {
+	party, err := dbConn.GetParty(
+		context.Background(),
+		testParty.Name,
+	)
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	log.Printf("party : %+v", party)
+}
+
+func TestGetCreatedParties(t *testing.T) {
+	parties, err := dbConn.GetCreatedParties(
+		context.Background(),
+		testParty.Creator,
+	)
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	if len(parties) == 0 {
+		log.Print("parties is empty")
+		return
+	}
+	for _, eachParty := range parties {
+		log.Printf("party : %+v", eachParty)
+	}
+	log.Printf("total parties created : %d", len(parties))
+}
+
+var testPartyMembership = &database.PartyMembership{
+	PartyName: "party1",
+	UserName:  "user1",
+	Status:    database.PartyMembership_Status_Invited,
+	CreatedAt: time.Now(),
+	UpdatedAt: time.Now(),
+}
+
+func TestPutPartyMembership(t *testing.T) {
+	err := dbConn.PutPartyMembership(
+		context.Background(),
+		testPartyMembership,
+	)
+	if err != nil {
+		t.Error(err)
+	}
+}
+
+func TestUpdatePartyMembership(t *testing.T) {
+	testPartyMembership.Status = database.PartyMembership_Status_Active
+	err := dbConn.UpdatePartyMembership(
+		context.Background(),
+		testPartyMembership,
+	)
+	if err != nil {
+		t.Error(err)
+	}
+}
+
+func TestDeletePartyMembership(t *testing.T) {
+	err := dbConn.DeletePartyMembership(
+		context.Background(),
+		testPartyMembership,
+	)
+	if err != nil {
+		t.Error(err)
+	}
+}

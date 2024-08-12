@@ -53,3 +53,56 @@ func NewFriendship(user1, user2 string) (*Friendship, error) {
 		UpdatedAt: time.Now(),
 	}, nil
 }
+
+type Party struct {
+	Name      string    `json:"name"`
+	Creator   string    `json:"creator"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
+}
+
+func NewParty(name, creator string) (*Party, error) {
+	if name == "" {
+		return nil, errors.New("party name is empty")
+	}
+	if creator == "" {
+		return nil, errors.New("creator name is empty")
+	}
+
+	return &Party{
+		Name:      strings.ToLower(name),
+		Creator:   strings.ToLower(name),
+		CreatedAt: time.Now(),
+	}, nil
+}
+
+type PartyMembership_Status string
+
+const (
+	PartyMembership_Status_Invited PartyMembership_Status = "invited"
+	PartyMembership_Status_Active  PartyMembership_Status = "active"
+)
+
+type PartyMembership struct {
+	PartyName string                 `json:"party_name"`
+	UserName  string                 `json:"user_name"`
+	Status    PartyMembership_Status `json:"status"`
+	CreatedAt time.Time              `json:"created_at"`
+	UpdatedAt time.Time              `json:"updated_at"`
+}
+
+func NewPartyMembership(partyName, userName string) (*PartyMembership, error) {
+	if partyName == "" {
+		return nil, errors.New("party name is empty")
+	}
+	if userName == "" {
+		return nil, errors.New("user name is empty")
+	}
+	return &PartyMembership{
+		PartyName: strings.ToLower(partyName),
+		UserName:  strings.ToLower(userName),
+		Status:    PartyMembership_Status_Invited,
+		CreatedAt: time.Now(),
+		UpdatedAt: time.Now(),
+	}, nil
+}
