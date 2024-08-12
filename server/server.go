@@ -6,6 +6,7 @@ import (
 	"log"
 
 	"socialite/config"
+	"socialite/database"
 
 	"github.com/gin-gonic/gin"
 )
@@ -18,6 +19,9 @@ type Server struct {
 	tls         bool
 	tlsCertPath string
 	tlsKeyPath  string
+
+	// connections
+	db database.Database
 }
 
 func New(ctx context.Context, cfg *config.Config) *Server {
