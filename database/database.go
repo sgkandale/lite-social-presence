@@ -11,6 +11,7 @@ type Database interface {
 	GetUserFriends(ctx context.Context, name string) ([]*User, error)
 	PutFriendship(ctx context.Context, friendship *Friendship) error
 	GetFriendship(ctx context.Context, user1, user2 string) (*Friendship, error)
+	GetFriendshipById(ctx context.Context, friendshipId int32) (*Friendship, error)
 	UpdateFriendship(ctx context.Context, friendship *Friendship) error
 	DeleteFriendship(ctx context.Context, friendshipId int32) error
 }

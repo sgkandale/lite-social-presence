@@ -181,3 +181,37 @@ func (c *Client) GetFriendship(ctx context.Context, user1, user2 string) (*datab
 	}
 	return friendship, nil
 }
+
+func (c *Client) GetFriendshipById(ctx context.Context, friendshipId int32) (*database.Friendship, error) {
+	if friendshipId == 0 {
+		return nil, errors.New("friendshipId input is nil")
+	}
+
+	queryCtx, cancelQueryCtx := context.WithTimeout(ctx, c.timeout)
+	defer cancelQueryCtx()
+
+	friendship := &database.Friendship{}
+	err := c.Pool.QueryRow(
+		queryCtx,
+		`SELECT
+				id, user1, user2, status, created_at, updated_at
+			FROM friendships
+			WHERE id = $1`,
+		friendshipId,
+	).Scan(
+		&friendship.Id,
+		&friendship.User1,
+		&friendship.User2,
+		&friendship.Status,
+		&friendship.CreatedAt,
+		&friendship.UpdatedAt,
+	)
+	if err != nil {
+		if err == pgx.ErrNoRows {
+			return nil, database.Err_NotFound
+		}
+		return nil, fmt.Errorf("scanning row: %s", err.Error())
+	}
+
+	return friendship, nil
+}

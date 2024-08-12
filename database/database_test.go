@@ -140,3 +140,15 @@ func TestGetFriendship(t *testing.T) {
 	}
 	log.Printf("friendship : %+v", friendship)
 }
+
+func TestGetFriendshipById(t *testing.T) {
+	friendship, err := dbConn.GetFriendshipById(
+		context.Background(),
+		801,
+	)
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	log.Printf("friendship : %+v", friendship)
+}
