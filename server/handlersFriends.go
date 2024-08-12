@@ -71,3 +71,48 @@ func (s *Server) RemoveFriend(ginCtx *gin.Context) {
 
 	ginCtx.JSON(http.StatusOK, Resp_Success)
 }
+
+func (s *Server) SendFriendRequest(ginCtx *gin.Context) {
+	// get user from context
+	user, exists := ginCtx.Get(Header_AuthUserKey)
+	if !exists || user == nil {
+		ginCtx.JSON(http.StatusUnauthorized, Err_AuthHeaderMissing)
+		return
+	}
+	userInstance := user.(*database.User)
+
+	// get friend name from query
+	friendName := ginCtx.Query("user_id")
+	if friendName == "" {
+		ginCtx.JSON(http.StatusBadRequest, Err_UserIdMissing)
+		return
+	}
+
+	// check if friendship already exists
+	_, err := s.db.GetFriendship(ginCtx, userInstance.Name, friendName)
+	if err == nil {
+		ginCtx.JSON(http.StatusConflict, Err_FriendshipAlreadyExists)
+		return
+	} else if err != database.Err_NotFound {
+		log.Printf("[ERROR] server.SendFriendRequest: getting friendship: %s", err.Error())
+		ginCtx.JSON(http.StatusInternalServerError, Err_SomethingWrong)
+		return
+	}
+
+	friendshipInstance, err := database.NewFriendship(userInstance.Name, friendName)
+	if err != nil {
+		log.Printf("[ERROR] server.SendFriendRequest: creating friendship instance: %s", err.Error())
+		ginCtx.JSON(http.StatusInternalServerError, Err_SomethingWrong)
+		return
+	}
+
+	// create friendship
+	err = s.db.PutFriendship(ginCtx, friendshipInstance)
+	if err != nil {
+		log.Printf("[ERROR] server.SendFriendRequest: creating friendship: %s", err.Error())
+		ginCtx.JSON(http.StatusInternalServerError, Err_SomethingWrong)
+		return
+	}
+
+	ginCtx.JSON(http.StatusOK, Resp_Success)
+}

@@ -29,9 +29,9 @@ func (s *Server) AddRoutes() {
 
 	// friend requests group
 	friendRequestsGroup := friendsGroup.Group("/requests")
-	friendRequestsGroup.POST("/user/:user_id", nil)      // send friend request
-	friendRequestsGroup.POST("/:request_id/accept", nil) // accept friend request
-	friendRequestsGroup.POST("/:request_id/reject", nil) // reject friend request
+	friendRequestsGroup.POST("/user/:user_id", s.SendFriendRequest) // send friend request
+	friendRequestsGroup.POST("/:request_id/accept", nil)            // accept friend request
+	friendRequestsGroup.POST("/:request_id/reject", nil)            // reject friend request
 
 	// party routes
 	partyGroup := securedRoutes.Group("/party")
