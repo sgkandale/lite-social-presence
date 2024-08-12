@@ -29,8 +29,9 @@ func (s *Server) AddRoutes() {
 
 	// friend requests group
 	friendRequestsGroup := friendsGroup.Group("/requests")
-	friendRequestsGroup.POST("/user/:user_id", nil) // send friend request
-	friendRequestsGroup.POST("/:request_id", nil)   // act on friend request
+	friendRequestsGroup.POST("/user/:user_id", nil)      // send friend request
+	friendRequestsGroup.POST("/:request_id/accept", nil) // accept friend request
+	friendRequestsGroup.POST("/:request_id/reject", nil) // reject friend request
 
 	// party routes
 	partyGroup := securedRoutes.Group("/party")
@@ -74,7 +75,7 @@ func AuthMiddleware() gin.HandlerFunc {
 		// check for auth token in header
 		authToken := c.GetHeader("Authorization")
 		if authToken == "" {
-			c.JSON(http.StatusUnauthorized, GeneralResponse{Message: "'Authorization' header is missing"})
+			c.JSON(http.StatusUnauthorized, Err_AuthHeaderMissing)
 			c.Abort()
 			return
 		}
@@ -86,7 +87,7 @@ func AuthMiddleware() gin.HandlerFunc {
 			c.Abort()
 			return
 		}
-		c.Set("user", userInstance)
+		c.Set(Header_AuthUserKey, userInstance)
 		c.Next()
 	}
 }

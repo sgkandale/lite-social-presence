@@ -1,5 +1,9 @@
 package server
 
+const (
+	Header_AuthUserKey = "auth_user"
+)
+
 type HealthResponse struct {
 	Status string `json:"status"`
 }
