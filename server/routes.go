@@ -40,10 +40,10 @@ func (s *Server) AddRoutes() {
 
 	// each party group
 	eachPartyGroup := partyGroup.Group("/:party_id")
-	eachPartyGroup.POST("/invite", nil)          // invite party
-	eachPartyGroup.POST("/join", nil)            // join party
-	eachPartyGroup.POST("/leave", nil)           // leave party
-	eachPartyGroup.DELETE("/user/:user_id", nil) // remove user from party
+	eachPartyGroup.POST("/invite", s.InviteUserToParty) // invite party
+	eachPartyGroup.POST("/join", nil)                   // join party
+	eachPartyGroup.POST("/leave", nil)                  // leave party
+	eachPartyGroup.DELETE("/user/:user_id", nil)        // remove user from party
 
 	// party invitation group
 	partyInvitationsGroup := partyGroup.Group("/invitations")

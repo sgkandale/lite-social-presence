@@ -27,3 +27,8 @@ type LoginResponse struct {
 type CreatePartyRequest struct {
 	Name string `json:"name"`
 }
+
+type InviteUserToPartyRequest struct {
+	PartyName string `json:"party_name"`
+	UserName  string `json:"user_name"`
+}

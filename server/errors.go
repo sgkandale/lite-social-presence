@@ -12,6 +12,9 @@ var (
 	Err_FriendshipRequestNotFound = GeneralResponse{Message: "friendship request not found"}
 	Err_SomethingWrong            = GeneralResponse{Message: "something went wrong"}
 	Err_AuthHeaderMissing         = GeneralResponse{Message: "'Authorization' header is missing"}
+	Err_PartyNotFound             = GeneralResponse{Message: "party not found"}
+	Err_NotPartyCreator           = GeneralResponse{Message: "you are not the creator of this party"}
+	Err_UserAlreadyInParty        = GeneralResponse{Message: "user is already in this party"}
 )
 
 var (
