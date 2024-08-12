@@ -50,6 +50,13 @@ func (s *Server) InviteUserToParty(ginCtx *gin.Context) {
 		ginCtx.JSON(http.StatusUnauthorized, Err_NotPartyCreator)
 		return
 	}
+	// creator cannot invite themselves
+	if party.Creator == reqBody.UserName {
+		ginCtx.JSON(http.StatusBadRequest, Err_CannotInviteSelf)
+		return
+	}
+
+	// check if user is already in party
 
 	partyMembership, err := database.NewPartyMembership(party.Name, reqBody.UserName)
 	if err != nil {
