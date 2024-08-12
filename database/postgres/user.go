@@ -7,6 +7,7 @@ import (
 
 	"socialite/database"
 
+	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgconn"
 )
 
@@ -59,6 +60,9 @@ func (c *Client) GetUser(ctx context.Context, name string) (*database.User, erro
 	}
 	err := row.Scan(&user.CreatedAt)
 	if err != nil {
+		if err == pgx.ErrNoRows {
+			return nil, database.Err_NotFound
+		}
 		return nil, fmt.Errorf("scanning postgres row: %s", err.Error())
 	}
 	return user, nil
