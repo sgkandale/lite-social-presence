@@ -2,8 +2,8 @@ package server
 
 func (s *Server) AddRoutes() {
 	// health routes
-	s.engine.Any("/health", nil)
-	s.engine.Any("/liveness", nil)
+	s.engine.Any("/health", s.Health)
+	s.engine.Any("/liveness", s.Health)
 
 	// friends routes
 	friendsGroup := s.engine.Group("/friends")
