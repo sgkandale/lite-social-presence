@@ -8,6 +8,13 @@ type ServerConfig struct {
 	ServiceName string `yaml:"service_name" env:"service_name"`
 }
 
+type DatabaseConfig struct {
+	Type      string `yaml:"type" env:"type"`
+	UriString string `yaml:"uri_string" env:"uri_string"`
+	Timeout   int    `yaml:"timeout" env:"timeout"`
+}
+
 type Config struct {
-	Server ServerConfig `yaml:"server" env:"server"`
+	Server   ServerConfig   `yaml:"server" env:"server"`
+	Database DatabaseConfig `yaml:"database" env:"database"`
 }

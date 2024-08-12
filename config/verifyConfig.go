@@ -21,4 +21,15 @@ func Verify(cfg *Config) {
 	if cfg.Server.ServiceName == "" {
 		log.Fatal("[ERROR] server.service_name is empty in config")
 	}
+
+	// database checks
+	if cfg.Database.Type == "" {
+		log.Fatal("[ERROR] database.type is empty in config")
+	}
+	if cfg.Database.UriString == "" {
+		log.Fatal("[ERROR] database.uri_string is empty in config")
+	}
+	if cfg.Database.Timeout <= 0 {
+		log.Fatal("[ERROR] database.timeout is empty in config")
+	}
 }
