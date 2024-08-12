@@ -41,7 +41,7 @@ func (s *Server) RemoveFriend(ginCtx *gin.Context) {
 	userInstance := user.(*database.User)
 
 	// get friend name from query
-	friendName := ginCtx.Query("user_id")
+	friendName := ginCtx.Param("user_id")
 	if friendName == "" {
 		ginCtx.JSON(http.StatusBadRequest, Err_UserIdMissing)
 		return
@@ -84,7 +84,7 @@ func (s *Server) SendFriendRequest(ginCtx *gin.Context) {
 	userInstance := user.(*database.User)
 
 	// get friend name from query
-	friendName := ginCtx.Query("user_id")
+	friendName := ginCtx.Param("user_id")
 	if friendName == "" {
 		ginCtx.JSON(http.StatusBadRequest, Err_UserIdMissing)
 		return
