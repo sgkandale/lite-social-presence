@@ -29,6 +29,5 @@ type CreatePartyRequest struct {
 }
 
 type InviteUserToPartyRequest struct {
-	PartyName string `json:"party_name"`
-	UserName  string `json:"user_name"`
+	UserName string `json:"user_name"`
 }
