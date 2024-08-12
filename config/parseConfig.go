@@ -10,10 +10,10 @@ const (
 	configFile = "config.yaml"
 )
 
-func ParseConfig() Config {
+func ParseConfig() *Config {
 	log.Println("[INFO] parsing config file : ", configFile)
 
-	var readConfig Config
+	var readConfig *Config
 
 	err := cleanenv.ReadConfig(configFile, &readConfig)
 	if err != nil {
