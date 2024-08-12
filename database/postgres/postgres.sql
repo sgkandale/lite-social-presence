@@ -16,3 +16,22 @@ CREATE TABLE friendships (
     FOREIGN KEY (user1) REFERENCES users(name) ON DELETE CASCADE,
     FOREIGN KEY (user2) REFERENCES users(name) ON DELETE CASCADE
 );
+
+CREATE TABLE party (
+    name VARCHAR(255) PRIMARY KEY,
+    creator VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (creator) REFERENCES users(name) ON DELETE CASCADE
+);
+
+CREATE TABLE party_members (
+    party_name VARCHAR(255) NOT NULL,
+    user_name VARCHAR(255) NOT NULL,
+    status VARCHAR(50) CHECK (status IN ('invited', 'active')) NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (party_name) REFERENCES party(name) ON DELETE CASCADE,
+    FOREIGN KEY (user_name) REFERENCES users(name) ON DELETE CASCADE,
+    PRIMARY KEY (party_name, user_name)
+);
