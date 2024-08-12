@@ -13,14 +13,14 @@ const (
 func ParseConfig() *Config {
 	log.Println("[INFO] parsing config file : ", configFile)
 
-	var readConfig *Config
+	var readConfig Config
 
 	err := cleanenv.ReadConfig(configFile, &readConfig)
 	if err != nil {
-		log.Fatal("[ERROR] reading config.yaml file")
+		log.Fatal("[ERROR] reading config.yaml file : ", err.Error())
 	}
 
 	log.Println("[INFO] config file parsed successfully")
 
-	return readConfig
+	return &readConfig
 }
