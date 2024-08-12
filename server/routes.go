@@ -44,10 +44,6 @@ func (s *Server) AddRoutes() {
 	eachPartyGroup.POST("/join", s.JoinParty)                      // join party
 	eachPartyGroup.POST("/leave", s.LeaveParty)                    // leave party
 	eachPartyGroup.DELETE("/user/:user_id", s.RemoveUserFromParty) // remove user from party
-
-	// party invitation group
-	partyInvitationsGroup := partyGroup.Group("/invitations")
-	partyInvitationsGroup.POST("/:invitation_id", nil) // act on party invitation
 }
 
 func (s *Server) AddMiddlewares() {
