@@ -2,6 +2,7 @@ package database
 
 import (
 	"errors"
+	"strings"
 	"time"
 )
 
@@ -15,7 +16,7 @@ func NewUser(name string) (*User, error) {
 		return nil, errors.New("user name is empty")
 	}
 	return &User{
-		Name:      name,
+		Name:      strings.ToLower(name),
 		CreatedAt: time.Now(),
 	}, nil
 }
