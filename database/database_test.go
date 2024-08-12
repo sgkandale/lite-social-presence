@@ -239,3 +239,16 @@ func TestDeletePartyMembership(t *testing.T) {
 		t.Error(err)
 	}
 }
+
+func TestGetPartyMembership(t *testing.T) {
+	membership, err := dbConn.GetPartyMembership(
+		context.Background(),
+		testPartyMembership.PartyName,
+		testPartyMembership.UserName,
+	)
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	log.Printf("membership : %+v", membership)
+}

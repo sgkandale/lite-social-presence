@@ -9,6 +9,7 @@ import (
 
 	"socialite/database"
 
+	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgconn"
 )
 
@@ -195,4 +196,42 @@ func (c *Client) DeletePartyMembership(ctx context.Context, membership *database
 	}
 
 	return nil
+}
+
+func (c *Client) GetPartyMembership(ctx context.Context, partyName, userName string) (*database.PartyMembership, error) {
+	if partyName == "" {
+		return nil, errors.New("party name is empty")
+	}
+	if userName == "" {
+		return nil, errors.New("user name is empty")
+	}
+
+	queryCtx, cancelQueryCtx := context.WithTimeout(ctx, c.timeout)
+	defer cancelQueryCtx()
+
+	partyMembership := database.PartyMembership{
+		PartyName: partyName,
+		UserName:  userName,
+	}
+	err := c.Pool.QueryRow(
+		queryCtx,
+		`SELECT
+			status, created_at, updated_at
+		FROM party_members			
+		WHERE
+			party_name = $1 AND user_name = $2`,
+		partyName,
+		userName,
+	).Scan(
+		&partyMembership.Status,
+		&partyMembership.CreatedAt,
+		&partyMembership.UpdatedAt,
+	)
+	if err != nil {
+		if err == pgx.ErrNoRows {
+			return nil, database.Err_NotFound
+		}
+		return nil, fmt.Errorf("scanning row: %s", err.Error())
+	}
+	return &partyMembership, nil
 }

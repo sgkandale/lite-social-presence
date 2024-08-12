@@ -22,6 +22,7 @@ type Database interface {
 
 	// party membership methods
 	PutPartyMembership(ctx context.Context, membership *PartyMembership) error
+	GetPartyMembership(ctx context.Context, partyName, userName string) (*PartyMembership, error)
 	UpdatePartyMembership(ctx context.Context, membership *PartyMembership) error
 	DeletePartyMembership(ctx context.Context, membership *PartyMembership) error
 }
