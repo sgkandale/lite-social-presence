@@ -1,0 +1,17 @@
+# Ignore all files without extension
+*
+!*.*
+!*/
+
+# all exe files
+*.exe
+
+# all log files
+*.log
+
+# all certificates
+*.pem
+*.key
+
+# all json files
+*.json
