@@ -7,6 +7,11 @@ func (s *Server) AddRoutes() {
 	s.engine.Any("/health", s.Health)
 	s.engine.Any("/liveness", s.Health)
 
+	// auth routes
+	authGroup := s.engine.Group("/auth")
+	authGroup.POST("/login", s.Login)
+	authGroup.POST("/register", s.Register)
+
 	// friends routes
 	friendsGroup := s.engine.Group("/friends")
 	friendsGroup.GET("/")            // get all friends
