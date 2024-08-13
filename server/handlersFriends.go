@@ -97,8 +97,17 @@ func (s *Server) SendFriendRequest(ginCtx *gin.Context) {
 	}
 
 	// check if friendship already exists
-	_, err := s.db.GetFriendship(ginCtx, userInstance.Name, friendName)
+	friendship, err := s.db.GetFriendship(ginCtx, userInstance.Name, friendName)
 	if err == nil {
+		if friendship.Status == database.Friendship_Status_Sent {
+			if friendship.User1 == userInstance.Name {
+				ginCtx.JSON(http.StatusConflict, Err_FriendshipRequestAlreadySent)
+				return
+			} else {
+				ginCtx.JSON(http.StatusConflict, Err_FriendshipRequestAlreadyReceived)
+				return
+			}
+		}
 		ginCtx.JSON(http.StatusConflict, Err_FriendshipAlreadyExists)
 		return
 	} else if err != database.Err_NotFound {
