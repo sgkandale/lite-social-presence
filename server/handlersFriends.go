@@ -167,8 +167,12 @@ func (s *Server) AcceptFriendRequest(ginCtx *gin.Context) {
 		return
 	}
 
-	if friendshipInstance.User1 != userInstance.Name && friendshipInstance.User2 != userInstance.Name {
+	if friendshipInstance.User2 != userInstance.Name {
 		ginCtx.JSON(http.StatusNotFound, Err_FriendshipRequestNotFound)
+		return
+	}
+	if friendshipInstance.Status == database.Friendship_Status_Confirmed {
+		ginCtx.JSON(http.StatusConflict, Err_FriendshipRequestAlreadyConfirmed)
 		return
 	}
 
