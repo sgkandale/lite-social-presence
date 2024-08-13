@@ -68,7 +68,7 @@ func NewParty(name, creator string) (*Party, error) {
 
 	return &Party{
 		Name:      strings.ToLower(name),
-		Creator:   strings.ToLower(name),
+		Creator:   strings.ToLower(creator),
 		CreatedAt: time.Now(),
 	}, nil
 }

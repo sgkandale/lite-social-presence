@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"log"
 
 	"socialite/database"
 
@@ -19,11 +20,24 @@ func (c *Client) PutParty(ctx context.Context, party *database.Party) error {
 	queryCtx, cancelQueryCtx := context.WithTimeout(ctx, c.timeout)
 	defer cancelQueryCtx()
 
-	_, err := c.Pool.Exec(
+	// TODO insert membership in transcation
+	// TODO check rollback approach
+	// start transaction
+	tx, err := c.Pool.Begin(queryCtx)
+	if err != nil {
+		return fmt.Errorf("beginning transaction: %s", err.Error())
+	}
+	// defer transaction commit or rollback
+	defer tx.Rollback(queryCtx)
+
+	log.Printf("new party : %+v", party)
+
+	// insert party
+	_, err = tx.Exec(
 		queryCtx,
-		`INSERT INTO party 
+		`INSERT INTO party
 			(name, creator, created_at, updated_at)
-		VALUES 
+		VALUES
 			($1, $2, $3, $4)`,
 		party.Name,
 		party.Creator,
@@ -37,6 +51,34 @@ func (c *Client) PutParty(ctx context.Context, party *database.Party) error {
 		}
 		return fmt.Errorf("inserting party: %s", err.Error())
 	}
+
+	// insert party membership
+	_, err = tx.Exec(
+		queryCtx,
+		`INSERT INTO party_members
+			(party_name, user_name, status, created_at, updated_at)
+		VALUES
+			($1, $2, $3, $4, $5)`,
+		party.Name,
+		party.Creator,
+		database.PartyMembership_Status_Active,
+		party.CreatedAt,
+		party.UpdatedAt,
+	)
+	if err != nil {
+		// duplicate entry check
+		if pgErr, ok := err.(*pgconn.PgError); ok && pgErr.Code == "23505" {
+			return database.Err_DuplicatePrimaryKey
+		}
+		return fmt.Errorf("inserting party membership: %s", err.Error())
+	}
+
+	// commit transaction
+	commitErr := tx.Commit(queryCtx)
+	if commitErr != nil {
+		return fmt.Errorf("committing transaction: %s", commitErr.Error())
+	}
+
 	return nil
 }
 

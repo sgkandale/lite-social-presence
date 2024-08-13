@@ -39,7 +39,7 @@ func (s *Server) CreateParty(ginCtx *gin.Context) {
 	err = s.db.PutParty(ginCtx, partyInstance)
 	if err != nil {
 		log.Printf("[ERROR] server.CreateParty: putting party in db: %s", err.Error())
-		ginCtx.JSON(http.StatusBadRequest, GeneralResponse{Message: err.Error()})
+		ginCtx.JSON(http.StatusBadRequest, Err_SomethingWrong)
 		return
 	}
 
