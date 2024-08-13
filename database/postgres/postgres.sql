@@ -9,7 +9,7 @@ CREATE TABLE friendships (
     id SERIAL PRIMARY KEY,
     user1 VARCHAR(255) NOT NULL,
     user2 VARCHAR(255) NOT NULL,
-    status VARCHAR(50) CHECK (status IN ('sent', 'confirmed')) NOT NULL,
+    status VARCHAR(50) CHECK (status IN ('sent', 'received', 'confirmed')) NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     UNIQUE(user1, user2),

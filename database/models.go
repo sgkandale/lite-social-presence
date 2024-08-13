@@ -10,6 +10,7 @@ type Friendship_Status string
 
 const (
 	Friendship_Status_Sent      Friendship_Status = "sent"
+	Friendship_Status_Received  Friendship_Status = "received"
 	Friendship_Status_Confirmed Friendship_Status = "confirmed"
 )
 
@@ -40,10 +41,6 @@ type Friendship struct {
 func NewFriendship(user1, user2 string) (*Friendship, error) {
 	if user1 == "" || user2 == "" {
 		return nil, errors.New("user name is empty")
-	}
-	// sort user names in lexicographical order
-	if user1 > user2 {
-		user1, user2 = user2, user1
 	}
 	return &Friendship{
 		User1:     strings.ToLower(user1),
