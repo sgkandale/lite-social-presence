@@ -32,4 +32,9 @@ func Verify(cfg *Config) {
 	if cfg.Database.Timeout <= 0 {
 		log.Fatal("[ERROR] database.timeout is empty in config")
 	}
+
+	// cache checks
+	if cfg.Cache.Type == "" {
+		log.Fatal("[ERROR] cache.type is empty in config")
+	}
 }

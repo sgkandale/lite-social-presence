@@ -14,7 +14,12 @@ type DatabaseConfig struct {
 	Timeout   int    `yaml:"timeout" env:"timeout"`
 }
 
+type CacheConfig struct {
+	Type string `yaml:"type" env:"type"`
+}
+
 type Config struct {
 	Server   ServerConfig   `yaml:"server" env:"server"`
 	Database DatabaseConfig `yaml:"database" env:"database"`
+	Cache    CacheConfig    `yaml:"cache" env:"cache"`
 }

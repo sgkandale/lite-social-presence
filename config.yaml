@@ -8,3 +8,5 @@ database:
   type: 'postgres'
   uri_string: ''
   timeout: 60
+cache:
+  type: 'state'
