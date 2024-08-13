@@ -216,3 +216,51 @@ func (c *Client) GetFriendshipById(ctx context.Context, friendshipId int32) (*da
 
 	return friendship, nil
 }
+
+func (c *Client) GetPendingFriendRequests(ctx context.Context, userName string) ([]*database.Friendship, error) {
+	if userName == "" {
+		return nil, errors.New("userName input is empty")
+	}
+
+	queryCtx, cancelQueryCtx := context.WithTimeout(ctx, c.timeout)
+	defer cancelQueryCtx()
+
+	rows, err := c.Pool.Query(
+		queryCtx,
+		`SELECT
+			id, user1, user2, status, created_at, updated_at
+		FROM friendships
+		WHERE
+			status = $1
+			AND
+			(user2 = $2)`,
+		database.Friendship_Status_Sent,
+		userName,
+	)
+	if err != nil {
+		if err == pgx.ErrNoRows {
+			return nil, nil
+		}
+		return nil, fmt.Errorf("querying postgres: %s", err.Error())
+	}
+	defer rows.Close()
+
+	respFriendships := make([]*database.Friendship, 0)
+
+	for rows.Next() {
+		friendship := &database.Friendship{}
+		err = rows.Scan(
+			&friendship.Id,
+			&friendship.User1,
+			&friendship.User2,
+			&friendship.Status,
+			&friendship.CreatedAt,
+			&friendship.UpdatedAt,
+		)
+		if err != nil {
+			return nil, fmt.Errorf("scanning row: %s", err.Error())
+		}
+		respFriendships = append(respFriendships, friendship)
+	}
+	return respFriendships, nil
+}

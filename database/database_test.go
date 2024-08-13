@@ -252,3 +252,22 @@ func TestGetPartyMembership(t *testing.T) {
 	}
 	log.Printf("membership : %+v", membership)
 }
+
+func TestGetPendingFriendRequests(t *testing.T) {
+	requests, err := dbConn.GetPendingFriendRequests(
+		context.Background(),
+		"user_2",
+	)
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	if len(requests) == 0 {
+		log.Print("requests is empty")
+		return
+	}
+	for _, eachRequest := range requests {
+		log.Printf("request : %+v", eachRequest)
+	}
+	log.Printf("total requests : %d", len(requests))
+}

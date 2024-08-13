@@ -241,3 +241,23 @@ func (s *Server) RejectFriendRequest(ginCtx *gin.Context) {
 
 	ginCtx.JSON(http.StatusOK, Resp_Success)
 }
+
+func (s *Server) GetFriendRequests(ginCtx *gin.Context) {
+	// get user from context
+	user, exists := ginCtx.Get(Header_AuthUserKey)
+	if !exists || user == nil {
+		ginCtx.JSON(http.StatusUnauthorized, Err_AuthHeaderMissing)
+		return
+	}
+	userInstance := user.(*database.User)
+
+	// get friend requests from database
+	friendRequests, err := s.db.GetPendingFriendRequests(ginCtx, userInstance.Name)
+	if err != nil {
+		log.Printf("[ERROR] server.GetFriendRequests: getting friend requests: %s", err.Error())
+		ginCtx.JSON(http.StatusInternalServerError, Err_SomethingWrong)
+		return
+	}
+
+	ginCtx.JSON(http.StatusOK, friendRequests)
+}

@@ -29,6 +29,7 @@ func (s *Server) AddRoutes() {
 
 	// friend requests group
 	friendRequestsGroup := friendsGroup.Group("/requests")
+	friendRequestsGroup.GET("/", s.GetFriendRequests)                      // get pending friend request
 	friendRequestsGroup.POST("/user/:user_id", s.SendFriendRequest)        // send friend request
 	friendRequestsGroup.POST("/:request_id/accept", s.AcceptFriendRequest) // accept friend request
 	friendRequestsGroup.POST("/:request_id/reject", s.RejectFriendRequest) // reject friend request
