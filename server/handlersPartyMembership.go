@@ -140,6 +140,24 @@ func (s *Server) LeaveParty(ginCtx *gin.Context) {
 		return
 	}
 
+	// get party
+	party, err := s.db.GetParty(ginCtx, partyName)
+	if err != nil {
+		if err == database.Err_NotFound {
+			ginCtx.JSON(http.StatusNotFound, Err_PartyNotFound)
+			return
+		}
+		log.Printf("[ERROR] server.LeaveParty: getting party from db: %s", err.Error())
+		ginCtx.JSON(http.StatusInternalServerError, Err_SomethingWrong)
+		return
+	}
+
+	// if user is also creator
+	if party.Creator == userInstance.Name {
+		ginCtx.JSON(http.StatusUnauthorized, Err_PartyCreatorCannotLeave)
+		return
+	}
+
 	// get party membership
 	partyMembership, err := s.db.GetPartyMembership(ginCtx, partyName, userInstance.Name)
 	if err != nil {
