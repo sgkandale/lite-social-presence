@@ -222,6 +222,12 @@ func (s *Server) RemoveUserFromParty(ginCtx *gin.Context) {
 		return
 	}
 
+	// creator cannot leave
+	if party.Creator == userName {
+		ginCtx.JSON(http.StatusBadRequest, Err_PartyCreatorCannotLeave)
+		return
+	}
+
 	// get party membership
 	partyMembership, err := s.db.GetPartyMembership(ginCtx, partyName, userName)
 	if err != nil {

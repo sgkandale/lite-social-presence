@@ -22,6 +22,7 @@ var (
 	Err_PartyInvitationNotFound           = GeneralResponse{Message: "party invitation not found"}
 	Err_PartyMembershipNotFound           = GeneralResponse{Message: "party membership not found"}
 	Err_CannotInviteSelf                  = GeneralResponse{Message: "cannot invite self to party"}
+	Err_PartyCreatorCannotLeave           = GeneralResponse{Message: "party creator cannot leave party"}
 )
 
 var (
