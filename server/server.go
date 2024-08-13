@@ -5,11 +5,14 @@ import (
 	"fmt"
 	"log"
 
+	"socialite/cache"
+	"socialite/cache/state"
 	"socialite/config"
 	"socialite/database"
 	"socialite/database/postgres"
 
 	"github.com/gin-gonic/gin"
+	"github.com/gorilla/websocket"
 )
 
 type Server struct {
@@ -22,7 +25,9 @@ type Server struct {
 	tlsKeyPath  string
 
 	// connections
-	db database.Database
+	db       database.Database
+	cache    cache.Cache
+	upgrader websocket.Upgrader
 }
 
 func New(ctx context.Context, cfg *config.Config) *Server {
@@ -39,6 +44,13 @@ func New(ctx context.Context, cfg *config.Config) *Server {
 		log.Fatal("[ERROR] database type is not supported: ", cfg.Database.Type)
 	}
 
+	var cacheConn cache.Cache
+	if cfg.Cache.Type == "state" {
+		cacheConn = state.New(ctx, &cfg.Cache)
+	} else {
+		log.Fatal("[ERROR] cache type is not supported: ", cfg.Cache.Type)
+	}
+
 	return &Server{
 		engine:      ginEngine,
 		port:        cfg.Server.Port,
@@ -47,6 +59,11 @@ func New(ctx context.Context, cfg *config.Config) *Server {
 		tlsCertPath: cfg.Server.CertPath,
 		tlsKeyPath:  cfg.Server.KeyPath,
 		db:          dbCnn,
+		cache:       cacheConn,
+		upgrader: websocket.Upgrader{
+			ReadBufferSize:  1024,
+			WriteBufferSize: 1024,
+		},
 	}
 }
 

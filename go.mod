@@ -5,6 +5,7 @@ go 1.22.0
 require (
 	github.com/dgraph-io/ristretto v0.0.2
 	github.com/gin-gonic/gin v1.10.0
+	github.com/gorilla/websocket v1.5.3
 	github.com/ilyakaznacheev/cleanenv v1.5.0
 	github.com/jackc/pgx/v5 v5.6.0
 )
