@@ -1,12 +1,9 @@
-server:
-  port: 8080
-  tls: false
-  cert_path: ""
-  key_path: ""
-  service_name: "socialite"
-database:
-  type: 'postgres'
-  uri_string: ''
-  timeout: 60
-cache:
-  type: 'state'
+server_port: 8080
+server_tls: false
+server_cert_path: ""
+server_key_path: ""
+server_service_name: "socialite"
+database_type: 'postgres'
+database_uri_string: ''
+database_timeout: 60
+cache_type: 'state'

@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"log"
 
 	"socialite/database"
 
@@ -29,8 +28,6 @@ func (c *Client) PutParty(ctx context.Context, party *database.Party) error {
 	}
 	// defer transaction commit or rollback
 	defer tx.Rollback(queryCtx)
-
-	log.Printf("new party : %+v", party)
 
 	// insert party
 	_, err = tx.Exec(

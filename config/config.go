@@ -23,3 +23,17 @@ type Config struct {
 	Database DatabaseConfig `yaml:"database" env:"database"`
 	Cache    CacheConfig    `yaml:"cache" env:"cache"`
 }
+
+type FlatConfig struct {
+	ServerPort        int    `yaml:"server_port" env:"server_port"`
+	ServerTLS         bool   `yaml:"server_tls" env:"server_tls"`
+	ServerCertPath    string `yaml:"server_cert_path" env:"server_cert_path"`
+	ServerKeyPath     string `yaml:"server_key_path" env:"server_key_path"`
+	ServerServiceName string `yaml:"server_service_name" env:"server_service_name"`
+
+	DatabaseType      string `yaml:"database_type" env:"database_type"`
+	DatabaseUriString string `yaml:"database_uri_string" env:"database_uri_string"`
+	DatabaseTimeout   int    `yaml:"database_timeout" env:"database_timeout"`
+
+	CacheType string `yaml:"cache_type" env:"cache_type"`
+}
