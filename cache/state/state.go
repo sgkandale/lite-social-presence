@@ -37,3 +37,11 @@ func New(ctx context.Context, cfg *config.CacheConfig) cache.Cache {
 		cache: cache,
 	}
 }
+
+func UserFriendsListKey(username string) string {
+	return "user_friends:" + username
+}
+
+func PatyMembersKey(username string) string {
+	return "party_members:" + username
+}
