@@ -20,6 +20,7 @@ func main() {
 	serverInstance := server.New(globalCtx, cfg)
 	serverInstance.AddMiddlewares()
 	serverInstance.AddRoutes()
+	go serverInstance.StartCrons(globalCtx)
 	go func() {
 		err := serverInstance.Start()
 		if err != nil {

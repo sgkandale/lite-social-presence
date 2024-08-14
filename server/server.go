@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"net/http"
+	"sync"
 
 	"socialite/cache"
 	"socialite/cache/state"
@@ -28,6 +30,11 @@ type Server struct {
 	db       database.Database
 	cache    cache.Cache
 	upgrader websocket.Upgrader
+
+	// internal variables
+	rwmutex               sync.RWMutex
+	userOnlineStatus      chan string
+	userWebsocketChannels map[string]chan []byte
 }
 
 func New(ctx context.Context, cfg *config.Config) *Server {
@@ -63,7 +70,13 @@ func New(ctx context.Context, cfg *config.Config) *Server {
 		upgrader: websocket.Upgrader{
 			ReadBufferSize:  1024,
 			WriteBufferSize: 1024,
+			CheckOrigin: func(r *http.Request) bool {
+				return true
+			},
 		},
+		rwmutex:               sync.RWMutex{},
+		userOnlineStatus:      make(chan string, 1_000),
+		userWebsocketChannels: make(map[string]chan []byte, 1_000),
 	}
 }
 
