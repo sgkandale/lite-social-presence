@@ -1,0 +1,1576 @@
+{
+    "info": {
+        "_postman_id": "6752f703-95de-4e81-96bd-4be320f535ea",
+        "name": "Socialite",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "_exporter_id": "9047467"
+    },
+    "item": [
+        {
+            "name": "Health",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{url_local}}/health",
+                    "host": [
+                        "{{url_local}}"
+                    ],
+                    "path": [
+                        "health"
+                    ]
+                }
+            },
+            "response": [
+                {
+                    "name": "Health",
+                    "originalRequest": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{url_local}}/health",
+                            "host": [
+                                "{{url_local}}"
+                            ],
+                            "path": [
+                                "health"
+                            ]
+                        }
+                    },
+                    "status": "OK",
+                    "code": 200,
+                    "_postman_previewlanguage": "json",
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json; charset=utf-8"
+                        },
+                        {
+                            "key": "Date",
+                            "value": "Mon, 12 Aug 2024 12:41:54 GMT"
+                        },
+                        {
+                            "key": "Content-Length",
+                            "value": "15"
+                        }
+                    ],
+                    "cookie": [],
+                    "body": "{\n    \"status\": \"OK\"\n}"
+                }
+            ]
+        },
+        {
+            "name": "Auth - Register",
+            "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"name\": \"user_5\"\r\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{url_local}}/auth/register",
+                    "host": [
+                        "{{url_local}}"
+                    ],
+                    "path": [
+                        "auth",
+                        "register"
+                    ]
+                }
+            },
+            "response": [
+                {
+                    "name": "Success",
+                    "originalRequest": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\r\n    \"name\": \"user1\"\r\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{url_local}}/auth/register",
+                            "host": [
+                                "{{url_local}}"
+                            ],
+                            "path": [
+                                "auth",
+                                "register"
+                            ]
+                        }
+                    },
+                    "status": "OK",
+                    "code": 200,
+                    "_postman_previewlanguage": "json",
+                    "header": [
+                        {
+                            "key": "Access-Control-Allow-Credentials",
+                            "value": "true"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Headers",
+                            "value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, X-Max"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Methods",
+                            "value": "POST, GET, OPTIONS, PUT, DELETE, UPDATE"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Origin",
+                            "value": "*"
+                        },
+                        {
+                            "key": "Access-Control-Max-Age",
+                            "value": "86400"
+                        },
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "key": "Date",
+                            "value": "Mon, 12 Aug 2024 13:56:02 GMT"
+                        },
+                        {
+                            "key": "Content-Length",
+                            "value": "21"
+                        }
+                    ],
+                    "cookie": [],
+                    "body": "{\n    \"message\": \"success\"\n}"
+                },
+                {
+                    "name": "Error - Duplicate",
+                    "originalRequest": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\r\n    \"name\": \"user_2\"\r\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{url_local}}/auth/register",
+                            "host": [
+                                "{{url_local}}"
+                            ],
+                            "path": [
+                                "auth",
+                                "register"
+                            ]
+                        }
+                    },
+                    "status": "Conflict",
+                    "code": 409,
+                    "_postman_previewlanguage": "json",
+                    "header": [
+                        {
+                            "key": "Access-Control-Allow-Credentials",
+                            "value": "true"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Headers",
+                            "value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, X-Max"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Methods",
+                            "value": "POST, GET, OPTIONS, PUT, DELETE, UPDATE"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Origin",
+                            "value": "*"
+                        },
+                        {
+                            "key": "Access-Control-Max-Age",
+                            "value": "86400"
+                        },
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "key": "Date",
+                            "value": "Mon, 12 Aug 2024 19:58:08 GMT"
+                        },
+                        {
+                            "key": "Content-Length",
+                            "value": "37"
+                        }
+                    ],
+                    "cookie": [],
+                    "body": "{\n    \"message\": \"user already registered\"\n}"
+                }
+            ]
+        },
+        {
+            "name": "Auth - Lggin",
+            "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"name\": \"user_1\"\r\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{url_local}}/auth/login",
+                    "host": [
+                        "{{url_local}}"
+                    ],
+                    "path": [
+                        "auth",
+                        "login"
+                    ]
+                }
+            },
+            "response": [
+                {
+                    "name": "Success",
+                    "originalRequest": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\r\n    \"name\": \"user1\"\r\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{url_local}}/auth/login",
+                            "host": [
+                                "{{url_local}}"
+                            ],
+                            "path": [
+                                "auth",
+                                "login"
+                            ]
+                        }
+                    },
+                    "status": "OK",
+                    "code": 200,
+                    "_postman_previewlanguage": "json",
+                    "header": [
+                        {
+                            "key": "Access-Control-Allow-Credentials",
+                            "value": "true"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Headers",
+                            "value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, X-Max"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Methods",
+                            "value": "POST, GET, OPTIONS, PUT, DELETE, UPDATE"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Origin",
+                            "value": "*"
+                        },
+                        {
+                            "key": "Access-Control-Max-Age",
+                            "value": "86400"
+                        },
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "key": "Date",
+                            "value": "Mon, 12 Aug 2024 13:57:20 GMT"
+                        },
+                        {
+                            "key": "Content-Length",
+                            "value": "17"
+                        }
+                    ],
+                    "cookie": [],
+                    "body": "{\n    \"token\": \"user1\"\n}"
+                },
+                {
+                    "name": "Error - Not Found",
+                    "originalRequest": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\r\n    \"name\": \"user1\"\r\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{url_local}}/auth/login",
+                            "host": [
+                                "{{url_local}}"
+                            ],
+                            "path": [
+                                "auth",
+                                "login"
+                            ]
+                        }
+                    },
+                    "status": "Not Found",
+                    "code": 404,
+                    "_postman_previewlanguage": "json",
+                    "header": [
+                        {
+                            "key": "Access-Control-Allow-Credentials",
+                            "value": "true"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Headers",
+                            "value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, X-Max"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Methods",
+                            "value": "POST, GET, OPTIONS, PUT, DELETE, UPDATE"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Origin",
+                            "value": "*"
+                        },
+                        {
+                            "key": "Access-Control-Max-Age",
+                            "value": "86400"
+                        },
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "key": "Date",
+                            "value": "Mon, 12 Aug 2024 20:00:29 GMT"
+                        },
+                        {
+                            "key": "Content-Length",
+                            "value": "28"
+                        }
+                    ],
+                    "cookie": [],
+                    "body": "{\n    \"message\": \"user not found\"\n}"
+                }
+            ]
+        },
+        {
+            "name": "Friends - Get All",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "user_2",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{url_local}}/friends",
+                    "host": [
+                        "{{url_local}}"
+                    ],
+                    "path": [
+                        "friends"
+                    ]
+                }
+            },
+            "response": [
+                {
+                    "name": "Error - No Auth",
+                    "originalRequest": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{url_local}}/friends",
+                            "host": [
+                                "{{url_local}}"
+                            ],
+                            "path": [
+                                "friends"
+                            ]
+                        }
+                    },
+                    "status": "Unauthorized",
+                    "code": 401,
+                    "_postman_previewlanguage": "json",
+                    "header": [
+                        {
+                            "key": "Access-Control-Allow-Credentials",
+                            "value": "true"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Headers",
+                            "value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, X-Max"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Methods",
+                            "value": "POST, GET, OPTIONS, PUT, DELETE, UPDATE"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Origin",
+                            "value": "*"
+                        },
+                        {
+                            "key": "Access-Control-Max-Age",
+                            "value": "86400"
+                        },
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "key": "Date",
+                            "value": "Mon, 12 Aug 2024 14:08:43 GMT"
+                        },
+                        {
+                            "key": "Content-Length",
+                            "value": "47"
+                        }
+                    ],
+                    "cookie": [],
+                    "body": "{\n    \"message\": \"'Authorization' header is missing\"\n}"
+                }
+            ]
+        },
+        {
+            "name": "Send Friend Request",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "user_2",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{url_local}}/friends/requests/user/user_1",
+                    "host": [
+                        "{{url_local}}"
+                    ],
+                    "path": [
+                        "friends",
+                        "requests",
+                        "user",
+                        "user_1"
+                    ]
+                }
+            },
+            "response": [
+                {
+                    "name": "Success",
+                    "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "user_1",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{url_local}}/friends/requests/user/user_2",
+                            "host": [
+                                "{{url_local}}"
+                            ],
+                            "path": [
+                                "friends",
+                                "requests",
+                                "user",
+                                "user_2"
+                            ]
+                        }
+                    },
+                    "status": "OK",
+                    "code": 200,
+                    "_postman_previewlanguage": "json",
+                    "header": [
+                        {
+                            "key": "Access-Control-Allow-Credentials",
+                            "value": "true"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Headers",
+                            "value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, X-Max"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Methods",
+                            "value": "POST, GET, OPTIONS, PUT, DELETE, UPDATE"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Origin",
+                            "value": "*"
+                        },
+                        {
+                            "key": "Access-Control-Max-Age",
+                            "value": "86400"
+                        },
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "key": "Date",
+                            "value": "Mon, 12 Aug 2024 20:05:07 GMT"
+                        },
+                        {
+                            "key": "Content-Length",
+                            "value": "21"
+                        }
+                    ],
+                    "cookie": [],
+                    "body": "{\n    \"message\": \"success\"\n}"
+                }
+            ]
+        },
+        {
+            "name": "Get Received Friend Requests",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "user_1",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{url_local}}/friends/requests",
+                    "host": [
+                        "{{url_local}}"
+                    ],
+                    "path": [
+                        "friends",
+                        "requests"
+                    ]
+                }
+            },
+            "response": [
+                {
+                    "name": "Success",
+                    "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "user_2",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{url_local}}/friends/requests",
+                            "host": [
+                                "{{url_local}}"
+                            ],
+                            "path": [
+                                "friends",
+                                "requests"
+                            ]
+                        }
+                    },
+                    "status": "OK",
+                    "code": 200,
+                    "_postman_previewlanguage": "json",
+                    "header": [
+                        {
+                            "key": "Access-Control-Allow-Credentials",
+                            "value": "true"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Headers",
+                            "value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, X-Max"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Methods",
+                            "value": "POST, GET, OPTIONS, PUT, DELETE, UPDATE"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Origin",
+                            "value": "*"
+                        },
+                        {
+                            "key": "Access-Control-Max-Age",
+                            "value": "86400"
+                        },
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "key": "Date",
+                            "value": "Tue, 13 Aug 2024 06:37:59 GMT"
+                        },
+                        {
+                            "key": "Content-Length",
+                            "value": "148"
+                        }
+                    ],
+                    "cookie": [],
+                    "body": "[\n    {\n        \"id\": 102,\n        \"user1\": \"user_1\",\n        \"user2\": \"user_2\",\n        \"status\": \"sent\",\n        \"created_at\": \"2024-08-13T06:34:22.907206Z\",\n        \"updated_at\": \"2024-08-13T06:34:22.907206Z\"\n    }\n]"
+                }
+            ]
+        },
+        {
+            "name": "Accept Friend Request",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "user_1",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{url_local}}/friends/requests/205/accept",
+                    "host": [
+                        "{{url_local}}"
+                    ],
+                    "path": [
+                        "friends",
+                        "requests",
+                        "205",
+                        "accept"
+                    ]
+                }
+            },
+            "response": [
+                {
+                    "name": "Success",
+                    "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "user_2",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{url_local}}/friends/requests/102/accept",
+                            "host": [
+                                "{{url_local}}"
+                            ],
+                            "path": [
+                                "friends",
+                                "requests",
+                                "102",
+                                "accept"
+                            ]
+                        }
+                    },
+                    "status": "OK",
+                    "code": 200,
+                    "_postman_previewlanguage": "json",
+                    "header": [
+                        {
+                            "key": "Access-Control-Allow-Credentials",
+                            "value": "true"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Headers",
+                            "value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, X-Max"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Methods",
+                            "value": "POST, GET, OPTIONS, PUT, DELETE, UPDATE"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Origin",
+                            "value": "*"
+                        },
+                        {
+                            "key": "Access-Control-Max-Age",
+                            "value": "86400"
+                        },
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "key": "Date",
+                            "value": "Tue, 13 Aug 2024 06:39:24 GMT"
+                        },
+                        {
+                            "key": "Content-Length",
+                            "value": "21"
+                        }
+                    ],
+                    "cookie": [],
+                    "body": "{\n    \"message\": \"success\"\n}"
+                }
+            ]
+        },
+        {
+            "name": "Reject Friend Request",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "user_2",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{url_local}}/friends/requests/201/reject",
+                    "host": [
+                        "{{url_local}}"
+                    ],
+                    "path": [
+                        "friends",
+                        "requests",
+                        "201",
+                        "reject"
+                    ]
+                }
+            },
+            "response": [
+                {
+                    "name": "Success",
+                    "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "user_2",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{url_local}}/friends/requests/102/accept",
+                            "host": [
+                                "{{url_local}}"
+                            ],
+                            "path": [
+                                "friends",
+                                "requests",
+                                "102",
+                                "accept"
+                            ]
+                        }
+                    },
+                    "status": "OK",
+                    "code": 200,
+                    "_postman_previewlanguage": "json",
+                    "header": [
+                        {
+                            "key": "Access-Control-Allow-Credentials",
+                            "value": "true"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Headers",
+                            "value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, X-Max"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Methods",
+                            "value": "POST, GET, OPTIONS, PUT, DELETE, UPDATE"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Origin",
+                            "value": "*"
+                        },
+                        {
+                            "key": "Access-Control-Max-Age",
+                            "value": "86400"
+                        },
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "key": "Date",
+                            "value": "Tue, 13 Aug 2024 06:39:24 GMT"
+                        },
+                        {
+                            "key": "Content-Length",
+                            "value": "21"
+                        }
+                    ],
+                    "cookie": [],
+                    "body": "{\n    \"message\": \"success\"\n}"
+                }
+            ]
+        },
+        {
+            "name": "Remove Friend",
+            "request": {
+                "method": "DELETE",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "user_1",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{url_local}}/friends/user_2",
+                    "host": [
+                        "{{url_local}}"
+                    ],
+                    "path": [
+                        "friends",
+                        "user_2"
+                    ]
+                }
+            },
+            "response": [
+                {
+                    "name": "Success",
+                    "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "user_2",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{url_local}}/friends/requests/102/accept",
+                            "host": [
+                                "{{url_local}}"
+                            ],
+                            "path": [
+                                "friends",
+                                "requests",
+                                "102",
+                                "accept"
+                            ]
+                        }
+                    },
+                    "status": "OK",
+                    "code": 200,
+                    "_postman_previewlanguage": "json",
+                    "header": [
+                        {
+                            "key": "Access-Control-Allow-Credentials",
+                            "value": "true"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Headers",
+                            "value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, X-Max"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Methods",
+                            "value": "POST, GET, OPTIONS, PUT, DELETE, UPDATE"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Origin",
+                            "value": "*"
+                        },
+                        {
+                            "key": "Access-Control-Max-Age",
+                            "value": "86400"
+                        },
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "key": "Date",
+                            "value": "Tue, 13 Aug 2024 06:39:24 GMT"
+                        },
+                        {
+                            "key": "Content-Length",
+                            "value": "21"
+                        }
+                    ],
+                    "cookie": [],
+                    "body": "{\n    \"message\": \"success\"\n}"
+                }
+            ]
+        },
+        {
+            "name": "Create Party",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "user_1",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"name\": \"party_2\"\r\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{url_local}}/party",
+                    "host": [
+                        "{{url_local}}"
+                    ],
+                    "path": [
+                        "party"
+                    ]
+                }
+            },
+            "response": [
+                {
+                    "name": "Success",
+                    "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "user_1",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\r\n    \"name\": \"party_1\"\r\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{url_local}}/party",
+                            "host": [
+                                "{{url_local}}"
+                            ],
+                            "path": [
+                                "party"
+                            ]
+                        }
+                    },
+                    "status": "OK",
+                    "code": 200,
+                    "_postman_previewlanguage": "json",
+                    "header": [
+                        {
+                            "key": "Access-Control-Allow-Credentials",
+                            "value": "true"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Headers",
+                            "value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, X-Max"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Methods",
+                            "value": "POST, GET, OPTIONS, PUT, DELETE, UPDATE"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Origin",
+                            "value": "*"
+                        },
+                        {
+                            "key": "Access-Control-Max-Age",
+                            "value": "86400"
+                        },
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "key": "Date",
+                            "value": "Tue, 13 Aug 2024 06:53:17 GMT"
+                        },
+                        {
+                            "key": "Content-Length",
+                            "value": "21"
+                        }
+                    ],
+                    "cookie": [],
+                    "body": "{\n    \"message\": \"party_1\"\n}"
+                }
+            ]
+        },
+        {
+            "name": "Get Created Parties",
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "user_1",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"name\": \"party_1\"\r\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{url_local}}/party/created",
+                    "host": [
+                        "{{url_local}}"
+                    ],
+                    "path": [
+                        "party",
+                        "created"
+                    ]
+                }
+            },
+            "response": [
+                {
+                    "name": "Success",
+                    "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "user_1",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\r\n    \"name\": \"party_1\"\r\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{url_local}}/party/created",
+                            "host": [
+                                "{{url_local}}"
+                            ],
+                            "path": [
+                                "party",
+                                "created"
+                            ]
+                        }
+                    },
+                    "status": "OK",
+                    "code": 200,
+                    "_postman_previewlanguage": "json",
+                    "header": [
+                        {
+                            "key": "Access-Control-Allow-Credentials",
+                            "value": "true"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Headers",
+                            "value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, X-Max"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Methods",
+                            "value": "POST, GET, OPTIONS, PUT, DELETE, UPDATE"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Origin",
+                            "value": "*"
+                        },
+                        {
+                            "key": "Access-Control-Max-Age",
+                            "value": "86400"
+                        },
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "key": "Date",
+                            "value": "Tue, 13 Aug 2024 06:55:49 GMT"
+                        },
+                        {
+                            "key": "Content-Length",
+                            "value": "118"
+                        }
+                    ],
+                    "cookie": [],
+                    "body": "[\n    {\n        \"name\": \"party_1\",\n        \"creator\": \"user_1\",\n        \"created_at\": \"2024-08-13T06:53:16.732782Z\",\n        \"updated_at\": \"0001-01-01T00:00:00Z\"\n    }\n]"
+                }
+            ]
+        },
+        {
+            "name": "Invite User to Party",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "user_1",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"user_name\": \"user_2\"\r\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{url_local}}/party/party_2/invite",
+                    "host": [
+                        "{{url_local}}"
+                    ],
+                    "path": [
+                        "party",
+                        "party_2",
+                        "invite"
+                    ]
+                }
+            },
+            "response": [
+                {
+                    "name": "Success",
+                    "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "user_1",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\r\n    \"user_name\": \"user_2\"\r\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{url_local}}/party/party_1/invite",
+                            "host": [
+                                "{{url_local}}"
+                            ],
+                            "path": [
+                                "party",
+                                "party_1",
+                                "invite"
+                            ]
+                        }
+                    },
+                    "status": "OK",
+                    "code": 200,
+                    "_postman_previewlanguage": "json",
+                    "header": [
+                        {
+                            "key": "Access-Control-Allow-Credentials",
+                            "value": "true"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Headers",
+                            "value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, X-Max"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Methods",
+                            "value": "POST, GET, OPTIONS, PUT, DELETE, UPDATE"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Origin",
+                            "value": "*"
+                        },
+                        {
+                            "key": "Access-Control-Max-Age",
+                            "value": "86400"
+                        },
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "key": "Date",
+                            "value": "Tue, 13 Aug 2024 06:58:31 GMT"
+                        },
+                        {
+                            "key": "Content-Length",
+                            "value": "21"
+                        }
+                    ],
+                    "cookie": [],
+                    "body": "{\n    \"message\": \"success\"\n}"
+                }
+            ]
+        },
+        {
+            "name": "Accept Party Invitation",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "user_2",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{url_local}}/party/party_2/join",
+                    "host": [
+                        "{{url_local}}"
+                    ],
+                    "path": [
+                        "party",
+                        "party_2",
+                        "join"
+                    ]
+                }
+            },
+            "response": [
+                {
+                    "name": "Success",
+                    "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "user_1",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\r\n    \"user_name\": \"user_2\"\r\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{url_local}}/party/party_1/invite",
+                            "host": [
+                                "{{url_local}}"
+                            ],
+                            "path": [
+                                "party",
+                                "party_1",
+                                "invite"
+                            ]
+                        }
+                    },
+                    "status": "OK",
+                    "code": 200,
+                    "_postman_previewlanguage": "json",
+                    "header": [
+                        {
+                            "key": "Access-Control-Allow-Credentials",
+                            "value": "true"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Headers",
+                            "value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, X-Max"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Methods",
+                            "value": "POST, GET, OPTIONS, PUT, DELETE, UPDATE"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Origin",
+                            "value": "*"
+                        },
+                        {
+                            "key": "Access-Control-Max-Age",
+                            "value": "86400"
+                        },
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "key": "Date",
+                            "value": "Tue, 13 Aug 2024 06:58:31 GMT"
+                        },
+                        {
+                            "key": "Content-Length",
+                            "value": "21"
+                        }
+                    ],
+                    "cookie": [],
+                    "body": "{\n    \"message\": \"success\"\n}"
+                }
+            ]
+        },
+        {
+            "name": "Leave Party",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "user_1",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{url_local}}/party/party_1/leave",
+                    "host": [
+                        "{{url_local}}"
+                    ],
+                    "path": [
+                        "party",
+                        "party_1",
+                        "leave"
+                    ]
+                }
+            },
+            "response": [
+                {
+                    "name": "Success",
+                    "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "user_1",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\r\n    \"user_name\": \"user_2\"\r\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{url_local}}/party/party_1/invite",
+                            "host": [
+                                "{{url_local}}"
+                            ],
+                            "path": [
+                                "party",
+                                "party_1",
+                                "invite"
+                            ]
+                        }
+                    },
+                    "status": "OK",
+                    "code": 200,
+                    "_postman_previewlanguage": "json",
+                    "header": [
+                        {
+                            "key": "Access-Control-Allow-Credentials",
+                            "value": "true"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Headers",
+                            "value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, X-Max"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Methods",
+                            "value": "POST, GET, OPTIONS, PUT, DELETE, UPDATE"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Origin",
+                            "value": "*"
+                        },
+                        {
+                            "key": "Access-Control-Max-Age",
+                            "value": "86400"
+                        },
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "key": "Date",
+                            "value": "Tue, 13 Aug 2024 06:58:31 GMT"
+                        },
+                        {
+                            "key": "Content-Length",
+                            "value": "21"
+                        }
+                    ],
+                    "cookie": [],
+                    "body": "{\n    \"message\": \"success\"\n}"
+                }
+            ]
+        },
+        {
+            "name": "Remove User From Party",
+            "request": {
+                "method": "DELETE",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "user_1",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{url_local}}/party/party_1/user/user_2",
+                    "host": [
+                        "{{url_local}}"
+                    ],
+                    "path": [
+                        "party",
+                        "party_1",
+                        "user",
+                        "user_2"
+                    ]
+                }
+            },
+            "response": [
+                {
+                    "name": "Success",
+                    "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "user_1",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\r\n    \"user_name\": \"user_2\"\r\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{url_local}}/party/party_1/invite",
+                            "host": [
+                                "{{url_local}}"
+                            ],
+                            "path": [
+                                "party",
+                                "party_1",
+                                "invite"
+                            ]
+                        }
+                    },
+                    "status": "OK",
+                    "code": 200,
+                    "_postman_previewlanguage": "json",
+                    "header": [
+                        {
+                            "key": "Access-Control-Allow-Credentials",
+                            "value": "true"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Headers",
+                            "value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, X-Max"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Methods",
+                            "value": "POST, GET, OPTIONS, PUT, DELETE, UPDATE"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Origin",
+                            "value": "*"
+                        },
+                        {
+                            "key": "Access-Control-Max-Age",
+                            "value": "86400"
+                        },
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "key": "Date",
+                            "value": "Tue, 13 Aug 2024 06:58:31 GMT"
+                        },
+                        {
+                            "key": "Content-Length",
+                            "value": "21"
+                        }
+                    ],
+                    "cookie": [],
+                    "body": "{\n    \"message\": \"success\"\n}"
+                }
+            ]
+        }
+    ],
+    "event": [
+        {
+            "listen": "prerequest",
+            "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "exec": [
+                    ""
+                ]
+            }
+        },
+        {
+            "listen": "test",
+            "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "exec": [
+                    ""
+                ]
+            }
+        }
+    ],
+    "variable": [
+        {
+            "key": "url_local",
+            "value": "http://localhost:8080",
+            "type": "string"
+        }
+    ]
+}

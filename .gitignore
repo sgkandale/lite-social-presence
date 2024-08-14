@@ -17,3 +17,4 @@
 *.json
 
 !build/Dockerfile
+!postman_collection_rest.json
