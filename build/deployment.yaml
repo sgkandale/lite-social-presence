@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: socialite-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: socialite
+  template:
+    metadata:
+      labels:
+        app: socialite
+    spec:
+      containers:
+        - name: socialite
+          image: socialite:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: server_port
+              value: 8080
+            - name: server_tls
+              value: false
+            - name: server_cert_path
+              value: ""
+            - name: server_key_path
+              value: ""
+            - name: server_service_name
+              value: socialite
+            - name: database_type
+              value: postgres
+            - name: database_uri_string
+              value: ""
+            - name: database_timeout
+              value: 60
+            - name: cache_type
+              value: state
+
+
+# kubectl apply -f deployment.yaml
+# kubectl apply -f service.yaml
