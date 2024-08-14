@@ -15,3 +15,5 @@
 
 # all json files
 *.json
+
+!build/Dockerfile
