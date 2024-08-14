@@ -11,6 +11,7 @@ type Database interface {
 	GetUserFriends(ctx context.Context, name string) ([]*User, error)
 	PutFriendship(ctx context.Context, friendship *Friendship) error
 	GetPendingFriendRequests(ctx context.Context, userName string) ([]*Friendship, error)
+	GetUserFriendsList(ctx context.Context) (map[string][]string, error)
 	GetFriendship(ctx context.Context, user1, user2 string) (*Friendship, error)
 	GetFriendshipById(ctx context.Context, friendshipId int32) (*Friendship, error)
 	UpdateFriendship(ctx context.Context, friendship *Friendship) error
@@ -26,4 +27,6 @@ type Database interface {
 	GetPartyMembership(ctx context.Context, partyName, userName string) (*PartyMembership, error)
 	UpdatePartyMembership(ctx context.Context, membership *PartyMembership) error
 	DeletePartyMembership(ctx context.Context, membership *PartyMembership) error
+	GetPartyMembers(ctx context.Context, partyName string) ([]string, error)
+	GetAllPartyMembers(ctx context.Context) (map[string][]string, error)
 }

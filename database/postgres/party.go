@@ -153,3 +153,77 @@ func (c *Client) GetCreatedParties(ctx context.Context, userName string) ([]*dat
 	}
 	return createdParties, nil
 }
+
+func (c *Client) GetPartyMembers(ctx context.Context, partyName string) ([]string, error) {
+	if partyName == "" {
+		return nil, errors.New("party name is empty")
+	}
+
+	queryCtx, cancelQueryCtx := context.WithTimeout(ctx, c.timeout)
+	defer cancelQueryCtx()
+
+	rows, err := c.Pool.Query(
+		queryCtx,
+		`SELECT
+			user_name
+		FROM
+			party_members
+		WHERE
+			party_name = $1
+			AND status = $2`,
+		partyName,
+		database.PartyMembership_Status_Active,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("querying rows: %s", err.Error())
+	}
+	defer rows.Close()
+
+	members := make([]string, 0)
+	for rows.Next() {
+		var member string
+		err := rows.Scan(
+			&member,
+		)
+		if err != nil {
+			return nil, fmt.Errorf("scanning row: %s", err.Error())
+		}
+		members = append(members, member)
+	}
+	return members, nil
+}
+
+func (c *Client) GetAllPartyMembers(ctx context.Context) (map[string][]string, error) {
+	queryCtx, cancelQueryCtx := context.WithTimeout(ctx, c.timeout)
+	defer cancelQueryCtx()
+
+	rows, err := c.Pool.Query(
+		queryCtx,
+		`SELECT 
+			p.name AS party_name, pm.user_name 
+		FROM party p
+		JOIN party_members pm 
+			ON p.name = pm.party_name
+		WHERE
+			pm.status = $1`,
+		database.PartyMembership_Status_Active,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("querying rows: %s", err.Error())
+	}
+	defer rows.Close()
+
+	members := make(map[string][]string, 0)
+	for rows.Next() {
+		var partyName, member string
+		err := rows.Scan(
+			&partyName,
+			&member,
+		)
+		if err != nil {
+			return nil, fmt.Errorf("scanning row: %s", err.Error())
+		}
+		members[partyName] = append(members[partyName], member)
+	}
+	return members, nil
+}

@@ -264,3 +264,46 @@ func (c *Client) GetPendingFriendRequests(ctx context.Context, userName string) 
 	}
 	return respFriendships, nil
 }
+
+func (c *Client) GetUserFriendsList(ctx context.Context) (map[string][]string, error) {
+	queryCtx, cancelQueryCtx := context.WithTimeout(ctx, c.timeout)
+	defer cancelQueryCtx()
+
+	rows, err := c.Pool.Query(
+		queryCtx,
+		`SELECT 
+			user1, user2 
+		FROM friendships 
+		WHERE 
+			status = $1`,
+		database.Friendship_Status_Confirmed,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("querying postgres: %s", err.Error())
+	}
+	defer rows.Close()
+
+	friendsMap := make(map[string][]string, 1_000)
+
+	for rows.Next() {
+		var user1, user2 string
+		err := rows.Scan(&user1, &user2)
+		if err != nil {
+			return nil, fmt.Errorf("scanning row: %s", err.Error())
+		}
+
+		_, exists := friendsMap[user1]
+		if !exists {
+			friendsMap[user1] = []string{}
+		}
+		friendsMap[user1] = append(friendsMap[user1], user2)
+
+		_, exists = friendsMap[user2]
+		if !exists {
+			friendsMap[user2] = []string{}
+		}
+		friendsMap[user2] = append(friendsMap[user2], user1)
+	}
+
+	return friendsMap, nil
+}

@@ -271,3 +271,53 @@ func TestGetPendingFriendRequests(t *testing.T) {
 	}
 	log.Printf("total requests : %d", len(requests))
 }
+
+func TestGetUserFriendsList(t *testing.T) {
+	friendsMap, err := dbConn.GetUserFriendsList(context.Background())
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	if len(friendsMap) == 0 {
+		log.Print("friendsMap is empty")
+		return
+	}
+	for userName, friendsList := range friendsMap {
+		log.Printf("%s -> %+v", userName, friendsList)
+	}
+}
+
+func TestGetPartyMembers(t *testing.T) {
+	members, err := dbConn.GetPartyMembers(
+		context.Background(),
+		"party_2",
+	)
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	if len(members) == 0 {
+		log.Print("members is empty")
+		return
+	}
+	for _, eachMember := range members {
+		log.Printf("member : %+v", eachMember)
+	}
+	log.Printf("total members : %d", len(members))
+}
+
+func TestGetAllPartyMembers(t *testing.T) {
+	members, err := dbConn.GetAllPartyMembers(context.Background())
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	if len(members) == 0 {
+		log.Print("members is empty")
+		return
+	}
+	for partyName, membersList := range members {
+		log.Printf("%s -> %+v", partyName, membersList)
+	}
+	log.Printf("total parties : %d", len(members))
+}
